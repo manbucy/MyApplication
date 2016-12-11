@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <TextView
+        android:id="@+id/text_timetable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="课程表"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="26sp"/>
+
+    <ImageView
+        android:id="@+id/img_timetable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/timetable"
+        android:adjustViewBounds="true" />
+</LinearLayout>
