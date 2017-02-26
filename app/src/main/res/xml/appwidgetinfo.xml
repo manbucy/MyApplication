@@ -4,6 +4,7 @@
     android:minHeight="300dp"
     android:minWidth="300dp"
     android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/timetable_pre"
     android:updatePeriodMillis="86400000">
 
 </appwidget-provider>

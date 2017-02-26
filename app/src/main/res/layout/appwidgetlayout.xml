@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1">
+
     <TextView
         android:id="@+id/text_timetable"
         android:layout_width="match_parent"
@@ -16,8 +17,11 @@
     <ImageView
         android:id="@+id/img_timetable"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="10dp"
-        android:src="@mipmap/timetable"
-        android:adjustViewBounds="true" />
+        android:src="@drawable/timetable"
+        android:scaleType="fitXY"
+        android:background="#09000000"/>
+
 </LinearLayout>

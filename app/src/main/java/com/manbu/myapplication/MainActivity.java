@@ -1,23 +1,35 @@
 package com.manbu.myapplication;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
-    private String StartTime = "2016-08-29 00:00:01";
+import me.relex.photodraweeview.OnPhotoTapListener;
+import me.relex.photodraweeview.OnViewTapListener;
+import me.relex.photodraweeview.PhotoDraweeView;
+
+public class MainActivity extends AppCompatActivity{
+    private String StartTime = "2017-02-27 00:00:01";
     private Date fdate, odate;
     private int Week = 0;
     public static String TAG = "MainActivity";
     private TextView mTextView;
+    private PhotoDraweeView mPhotoDraweeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         initData();
         initView();
@@ -28,6 +40,29 @@ public class MainActivity extends AppCompatActivity {
         odate = new Date();
         Week = Caculate(daysOfTwo(fdate, odate),7);
         Log.d(TAG, "onCreate: " + Week);
+
+        mPhotoDraweeView = (PhotoDraweeView) findViewById(R.id.photo_drawee_view);
+        mPhotoDraweeView.setPhotoUri(Uri.parse("res:///" + R.drawable.timetable));
+        mPhotoDraweeView.setOnPhotoTapListener(new OnPhotoTapListener() {
+            @Override public void onPhotoTap(View view, float x, float y) {
+                Toast.makeText(view.getContext(), "onPhotoTap :  x =  " + x + ";" + " y = " + y,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        mPhotoDraweeView.setOnViewTapListener(new OnViewTapListener() {
+            @Override public void onViewTap(View view, float x, float y) {
+                Toast.makeText(view.getContext(), "onViewTap", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mPhotoDraweeView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                Toast.makeText(v.getContext(), "onLongClick", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+
     }
 
     private void initView() {
@@ -35,17 +70,6 @@ public class MainActivity extends AppCompatActivity {
         mTextView.setText(Week + "");
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
 
     private Date stringToDate(String date) {
         Date result = null;
@@ -58,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
     }
     private int daysOfTwo(Date fDate, Date oDate) {
         long day = oDate.getTime()-fDate.getTime();
-        return Caculate(day,24*60*60*1000);
+        if(day<0){
+            return 0;
+        }else{
+            return Caculate(day,24*60*60*1000);
+        }
     }
 
     private int Caculate(int dividend,int divisor){
